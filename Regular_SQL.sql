@@ -1,0 +1,40 @@
+
+--You can produce different output formats (like CSV, JSON, etc.) 
+
+json: SELECT FIRSTNME, LASTNAME, SALARY 
+FROM JFYO1.EMPLOYEE;
+
+csv: SELECT DEPTNO, DEPTNAME
+FROM JFYO1.DEPARTMENT;
+
+sql: SELECT 
+    E.FIRSTNME,
+    E.LASTNAME,
+    D.DEPTNAME,
+    E.SALARY
+FROM JFYO1.EMPLOYEE E
+JOIN JFYO1.DEPARTMENT D
+  ON E.WORKDEPT = D.DEPTNO
+ORDER BY E.SALARY DESC;
+--Functions to provide queries as tables
+udtf: SELECT 
+    WORKDEPT,
+    FIRSTNME,
+    LASTNAME,
+    SALARY,
+    RANK() OVER (PARTITION BY WORKDEPT ORDER BY SALARY DESC) AS RANK_IN_DEPT
+FROM JFYO1.EMPLOYEE;
+
+--And rpg data structures
+rpg: SELECT 
+    E.FIRSTNME,
+    E.LASTNAME,
+    D.DEPTNAME,
+    E.SALARY
+FROM JFYO1.EMPLOYEE E
+JOIN JFYO1.DEPARTMENT D
+  ON E.WORKDEPT = D.DEPTNO
+ORDER BY E.SALARY DESC;
+
+--Finally you can execute CL commands
+cl: dspffd jfyo1/employee
